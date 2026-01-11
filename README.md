@@ -1,6 +1,6 @@
 # Account Brief Generator
 
-A Python CLI tool that generates structured account briefs to help Account Executives quickly prepare for outbound outreach and discovery calls.
+A Python CLI tool and web app that generates structured account briefs to help Account Executives quickly prepare for outbound outreach and discovery calls.
 
 ## What It Does
 
@@ -13,42 +13,117 @@ Generates a comprehensive account brief in markdown format with:
 - **1 LinkedIn Message** - LinkedIn outreach template
 - **Objection Handling** - Common objections with response templates
 
+## Prerequisites
+
+- Python 3.9 or higher
+- pip (Python package installer)
+
 ## Installation
 
+1. **Clone the repository:**
+```bash
+git clone https://github.com/MohamedNSoliman/account-brief-generator.git
+cd account-brief-generator
+```
+
+2. **Create a virtual environment (recommended):**
+```bash
+python3 -m venv venv
+
+# On macOS/Linux:
+source venv/bin/activate
+
+# On Windows:
+venv\Scripts\activate
+```
+
+3. **Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
+4. **Optional: Install LLM dependencies** (for enhanced features):
+```bash
+# For OpenAI
+pip install openai>=1.0.0
+
+# For Anthropic
+pip install anthropic>=0.18.0
+```
+
 ## Usage
 
+### CLI (Command Line)
+
 ```bash
-python main.py --company "Acme Corp" --persona "CTO" --competitor "VendorX, CompetitorY"
+python main.py --company "Acme Corp" --persona "Head of Engineering" --competitor "VendorX, CompetitorY"
 ```
 
 **Short options:**
 ```bash
-python main.py -c "Ramp" -p "CTO" -co "GitHub Copilot, Windsurf"
+python main.py -c "Ramp" -p "VP Engineering" -co "GitHub Copilot, Windsurf"
 ```
 
 **Arguments:**
 - `--company`, `-c`: Company name (required)
-- `--persona`, `-p`: Target persona (required)
-- `--competitor`, `-co`: Competitor name(s), comma-separated (optional)
-- `--llm`: Use LLM to research persona names (choices: `openai` or `anthropic`). Requires API key in environment variable.
+- `--persona`, `-p`: Target persona (required). Recommended: Head of Engineering, VP Engineering, Developer Experience Lead, Platform Lead, Engineering Productivity
+- `--competitor`, `-co`: Competitor name(s), comma-separated (optional, default: "Unknown")
+- `--no-research`: Skip web research and use template placeholders only
+- `--llm`: Use LLM to research persona names and enhance content (choices: `openai` or `anthropic`). Requires API key in environment variable.
 
 **Output:** Saves to `outputs/<company>/<company>-v<N>.md`
 
-**LLM Integration (Optional):**
-To get actual persona names (e.g., "CTO: John Smith"), use the `--llm` flag:
+### Web App (Streamlit)
+
+Run the web interface:
+
+```bash
+streamlit run app.py
+```
+
+Then open your browser to `http://localhost:8501`
+
+See [README_WEB_APP.md](README_WEB_APP.md) for deployment options.
+
+### LLM Integration (Optional)
+
+To get actual persona names and enhanced, personalized content, use the `--llm` flag:
 
 ```bash
 # With OpenAI (ChatGPT)
 export OPENAI_API_KEY="your-api-key"
-python main.py -c "Ramp" -p "CTO" --llm openai
+python main.py -c "Ramp" -p "Head of Engineering" --llm openai
 
 # With Anthropic (Claude)
 export ANTHROPIC_API_KEY="your-api-key"
-python main.py -c "Ramp" -p "CTO" --llm anthropic
+python main.py -c "Ramp" -p "VP Engineering" --llm anthropic
+```
+
+**What LLM integration adds:**
+- Real persona names (e.g., "VP Engineering: Jane Smith")
+- Detailed company information (size, funding, revenue, tech stack)
+- Personalized email sequences (no placeholders, company-specific)
+- Enhanced LinkedIn messages
+
+## Project Structure
+
+```
+account-brief-generator/
+├── main.py              # CLI entry point
+├── app.py               # Streamlit web app
+├── requirements.txt     # Python dependencies
+├── README.md            # This file
+├── README_WEB_APP.md    # Web app deployment guide
+├── .gitignore          # Git ignore rules
+├── src/
+│   ├── __init__.py
+│   ├── prompts.py      # Prompt templates
+│   ├── renderer.py     # Markdown rendering logic
+│   ├── researcher.py   # Web research (DuckDuckGo)
+│   └── llm_researcher.py  # LLM integration
+└── outputs/            # Generated briefs (gitignored)
+    └── <company>/
+        └── <company>-v<N>.md
 ```
 
 ## Why It's Useful for AEs
@@ -61,4 +136,16 @@ python main.py -c "Ramp" -p "CTO" --llm anthropic
 
 **Be Prepared:** Have objection responses, discovery questions, and email templates ready before your first interaction.
 
-**Focus on Execution:** Spend less time on prep work and more time on selling. Fill in the template placeholders with account-specific research and start outreach immediately.
+**Focus on Execution:** Spend less time on prep work and more time on selling. With LLM integration, get personalized content ready to send.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source. Feel free to use and modify as needed.
+
+## Support
+
+For issues or questions, please open an issue on [GitHub](https://github.com/MohamedNSoliman/account-brief-generator/issues).

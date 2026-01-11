@@ -3,7 +3,7 @@ Markdown renderer for account brief generation.
 """
 
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 
 from .prompts import format_competitors_display
 from .researcher import research_company, extract_why_now_triggers, get_persona_pain_points, generate_discovery_questions

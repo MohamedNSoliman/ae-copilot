@@ -36,3 +36,6 @@ Thumbs.db
 
 # Output files
 outputs/
+
+# Database
+data/

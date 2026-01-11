@@ -6,6 +6,7 @@ Quick setup instructions to get MoZilla running on your machine.
 
 - Python 3.9 or higher
 - pip (Python package installer)
+- (Optional) [Cursor IDE](https://cursor.sh/) - Recommended code editor for development
 
 ## Quick Start
 
@@ -39,6 +40,27 @@ python3 -m streamlit run app.py
 ```
 
 The app will automatically open in your browser at `http://localhost:8501`
+
+## Optional: Using Cursor IDE
+
+MoZilla was built with [Cursor](https://cursor.sh/), an AI-powered code editor. If you want to develop or modify the code:
+
+1. **Install Cursor:**
+   - Download from [cursor.sh](https://cursor.sh/)
+   - Install on your system (macOS, Windows, or Linux)
+
+2. **Open the project in Cursor:**
+   ```bash
+   cursor account-brief-generator
+   ```
+   Or open Cursor and use File → Open Folder to select the project directory
+
+3. **Benefits of using Cursor:**
+   - AI-assisted code editing
+   - Better code understanding and navigation
+   - Seamless integration with the codebase
+
+**Note:** Cursor is optional - you can use any code editor or just run the app without editing code.
 
 ## Optional: Set Up Virtual Environment (Recommended)
 

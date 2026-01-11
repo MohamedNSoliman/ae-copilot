@@ -356,8 +356,9 @@ def show_login_page():
     
     with col2:
         st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("### 🦎 MoZilla", unsafe_allow_html=True)
+        st.markdown("### 🦎 MoZilla GTM Account Brief Generator", unsafe_allow_html=True)
         st.caption("Generate comprehensive account briefs with AI")
+        st.markdown('<p style="font-size: 0.85em; color: #8b949e; margin-top: 1rem;">Made with <a href="https://cursor.sh" style="color: #58a6ff; text-decoration: none;">Cursor</a></p>', unsafe_allow_html=True)
         st.markdown("<br><br>", unsafe_allow_html=True)
         
         tab1, tab2 = st.tabs(["🔑 Login", "📝 Register"])
@@ -549,8 +550,9 @@ def show_chat_page():
             st.rerun()
     
     # Main content area
-    st.markdown("### 🦎 MoZilla")
+    st.markdown("### 🦎 MoZilla GTM Account Brief Generator")
     st.caption("Generate comprehensive account briefs with a conversational interface")
+    st.markdown('<p style="font-size: 0.85em; color: #8b949e;">Made with <a href="https://cursor.sh" style="color: #58a6ff; text-decoration: none;">Cursor</a></p>', unsafe_allow_html=True)
     st.markdown("---")
     
     # Chat messages
@@ -577,28 +579,46 @@ def show_chat_page():
         parsed = parse_user_input(prompt)
         prompt_lower = prompt.lower().strip()
         
-        if parsed["company"]:
+        # Update brief data from parsed input (only if we don't already have that field)
+        if parsed["company"] and not st.session_state.brief_data["company"]:
             st.session_state.brief_data["company"] = parsed["company"]
-        if parsed["persona"]:
+        if parsed["persona"] and not st.session_state.brief_data["persona"]:
             st.session_state.brief_data["persona"] = parsed["persona"]
-        if parsed["competitors"]:
+        if parsed["competitors"] and st.session_state.brief_data["competitors"] == ["Unknown"]:
             st.session_state.brief_data["competitors"] = parsed["competitors"]
         
-        if not st.session_state.brief_data["company"] and len(prompt.split()) <= 3:
+        # Fallback: if we don't have company and prompt looks like a company name
+        if not st.session_state.brief_data["company"] and len(prompt.split()) <= 3 and not parsed["persona"]:
             st.session_state.brief_data["company"] = prompt.strip()
         
+        # Check what we still need
         needs_company = not st.session_state.brief_data["company"]
         needs_persona = not st.session_state.brief_data["persona"]
+        needs_competitors = st.session_state.brief_data["competitors"] == ["Unknown"]
         
+        # Determine response based on what we need
         if needs_company:
             response = "I need a company name to generate the brief. Which company would you like me to research?"
         elif needs_persona:
-            response = f"Great! I'll create a brief for **{st.session_state.brief_data['company']}**.\n\n"
-            response += "**Who is the target persona?** (e.g., 'Head of Engineering', 'VP Engineering', 'Developer Experience Lead', 'Platform Lead', 'Engineering Productivity', or 'CTO')"
-        elif st.session_state.brief_data["competitors"] == ["Unknown"]:
-            response = f"Perfect! I have:\n- **Company:** {st.session_state.brief_data['company']}\n- **Persona:** {st.session_state.brief_data['persona']}\n\n"
-            response += "**Any specific competitors to consider?** (Type 'none', 'unknown', or 'skip' to proceed without competitors, or list them separated by commas)"
+            # Handle skip words for persona (in case user wants to skip)
+            if any(word in prompt_lower for word in ["skip", "none", "unknown"]):
+                response = "I need a target persona to generate the brief. Please provide the role (e.g., 'Head of Engineering', 'VP Engineering', 'CTO')."
+            else:
+                response = f"Great! I'll create a brief for **{st.session_state.brief_data['company']}**.\n\n"
+                response += "**Who is the target persona?** (e.g., 'Head of Engineering', 'VP Engineering', 'Developer Experience Lead', 'Platform Lead', 'Engineering Productivity', or 'CTO')"
+        elif needs_competitors:
+            # Check if user wants to skip competitors
+            if any(word in prompt_lower for word in ["skip", "none", "unknown", "no", "no competitors", "n/a"]):
+                # User wants to skip competitors - generate brief now
+                response = f"Got it! Generating account brief for **{st.session_state.brief_data['company']}** (Target: {st.session_state.brief_data['persona']})...\n\n"
+                brief_content = generate_brief_response()
+                response += brief_content
+            else:
+                # Ask about competitors
+                response = f"Perfect! I have:\n- **Company:** {st.session_state.brief_data['company']}\n- **Persona:** {st.session_state.brief_data['persona']}\n\n"
+                response += "**Any specific competitors to consider?** (Type 'none', 'unknown', or 'skip' to proceed without competitors, or list them separated by commas)"
         else:
+            # We have everything - generate the brief
             response = f"Excellent! Generating account brief for:\n\n"
             response += f"- **Company:** {st.session_state.brief_data['company']}\n"
             response += f"- **Persona:** {st.session_state.brief_data['persona']}\n"
@@ -606,12 +626,6 @@ def show_chat_page():
             response += "🔍 Researching and generating your brief... This may take a moment.\n\n"
             brief_content = generate_brief_response()
             response += brief_content
-        
-        if not needs_company and not needs_persona and st.session_state.brief_data["competitors"] == ["Unknown"]:
-            if any(word in prompt_lower for word in ["skip", "none", "unknown", "no", "no competitors", "n/a"]):
-                response = f"Got it! Generating account brief for **{st.session_state.brief_data['company']}** (Target: {st.session_state.brief_data['persona']})...\n\n"
-                brief_content = generate_brief_response()
-                response += brief_content
         
         st.session_state.messages.append({"role": "assistant", "content": response})
         with st.chat_message("assistant"):
@@ -648,7 +662,7 @@ def show_chat_page():
 
 def main():
     st.set_page_config(
-        page_title="MoZilla",
+        page_title="MoZilla GTM Account Brief Generator",
         page_icon="🦎",
         layout="wide",
         initial_sidebar_state="expanded"

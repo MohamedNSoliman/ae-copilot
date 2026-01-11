@@ -4,9 +4,6 @@ __pycache__/
 *$py.class
 *.so
 .Python
-env/
-venv/
-ENV/
 build/
 develop-eggs/
 dist/
@@ -22,6 +19,19 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv
+
+# Streamlit
+.streamlit/
+.streamlit/secrets.toml
 
 # IDE
 .vscode/
@@ -29,13 +39,55 @@ wheels/
 *.swp
 *.swo
 *~
+.project
+.pydevproject
 
 # OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
-# Output files
+# Project specific
 outputs/
+data/*.db
+data/*.json
+!data/sample_*.json
+!data/sample_transcript.json
+!data/sample_crm.json
 
-# Database
-data/
+# Secrets and API keys
+.env
+.env.local
+*.key
+*.pem
+secrets/
+*.secret
+config.local.*
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

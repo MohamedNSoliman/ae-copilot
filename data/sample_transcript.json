@@ -1,0 +1,38 @@
+{
+  "call_id": "sample_call_123",
+  "call_data": {
+    "title": "Discovery Call - Acme Corp",
+    "duration": 1800,
+    "participants": ["John Doe (VP Engineering)", "Jane Smith (AE)"]
+  },
+  "transcript": {
+    "text": "We have about 50 engineers on the team. Currently using GitHub Copilot and some custom tooling. We're looking to improve developer productivity. Our team spends about 5 hours per week on repetitive coding tasks. We're evaluating several solutions.",
+    "speakers": [
+      {
+        "name": "John Doe",
+        "text": "We have about 50 engineers on the team.",
+        "timestamp": 30
+      },
+      {
+        "name": "Jane Smith",
+        "text": "Currently using GitHub Copilot and some custom tooling.",
+        "timestamp": 45
+      },
+      {
+        "name": "John Doe",
+        "text": "We're looking to improve developer productivity. The current tools are slow and frustrating.",
+        "timestamp": 120
+      },
+      {
+        "name": "John Doe",
+        "text": "Our team spends about 5 hours per week on repetitive coding tasks.",
+        "timestamp": 180
+      },
+      {
+        "name": "Jane Smith",
+        "text": "We're evaluating several solutions.",
+        "timestamp": 240
+      }
+    ]
+  }
+}

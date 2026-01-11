@@ -1,0 +1,22 @@
+name: Streamlit Cloud Deployment
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check Streamlit Cloud deployment
+      run: |
+        echo "✅ Code pushed to GitHub"
+        echo "📝 Next steps:"
+        echo "1. Go to https://share.streamlit.io"
+        echo "2. Connect your GitHub repository"
+        echo "3. Set main file to: ae_copilot_app.py"
+        echo "4. Add secrets for API keys (optional)"

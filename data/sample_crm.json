@@ -1,0 +1,23 @@
+{
+  "account_name": "Acme Corp",
+  "domain": "acme.com",
+  "industry": "Technology",
+  "employee_count": 500,
+  "region": "North America",
+  "key_contacts": [
+    {
+      "name": "John Doe",
+      "title": "VP Engineering",
+      "email": "john@acme.com"
+    },
+    {
+      "name": "Jane Smith",
+      "title": "CTO",
+      "email": "jane@acme.com"
+    }
+  ],
+  "opp_stage": "Qualified",
+  "opp_amount": 50000.0,
+  "opp_close_date": "2024-06-30",
+  "last_activity_notes": "Initial discovery call completed. Interested in developer productivity tools."
+}

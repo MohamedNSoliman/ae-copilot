@@ -18,8 +18,8 @@ from src.database import (
 )
 
 
-# Custom CSS for Cursor-like appearance
-CURSOR_CSS = """
+# Custom CSS for Cursor-like dark appearance
+CURSOR_DARK_CSS = """
 <style>
     /* Main theme - Dark, clean, modern */
     .stApp {
@@ -241,6 +241,232 @@ CURSOR_CSS = """
         padding: 1.5rem;
         background-color: #161b22;
     }
+    </style>
+"""
+
+# Custom CSS for light mode
+CURSOR_LIGHT_CSS = """
+<style>
+    /* Main theme - Light, clean, modern */
+    .stApp {
+        background: #ffffff;
+        color: #24292f;
+    }
+    
+    /* Hide default Streamlit branding */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f6f8fa;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #d0d7de;
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #afb8c1;
+    }
+    
+    /* Sidebar styling */
+    .css-1d391kg {
+        background-color: #f6f8fa;
+        border-right: 1px solid #d0d7de;
+    }
+    
+    /* Input fields */
+    .stTextInput > div > div > input {
+        background-color: #ffffff;
+        color: #24292f;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+    }
+    
+    .stTextInput > div > div > input:focus {
+        border-color: #0969da;
+        box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
+    }
+    
+    /* Buttons */
+    .stButton > button {
+        background-color: #238636;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+    
+    .stButton > button:hover {
+        background-color: #2ea043;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+    }
+    
+    /* Secondary buttons */
+    button[kind="secondary"] {
+        background-color: #f6f8fa !important;
+        color: #24292f !important;
+        border: 1px solid #d0d7de !important;
+    }
+    
+    button[kind="secondary"]:hover {
+        background-color: #f3f4f6 !important;
+        border-color: #afb8c1 !important;
+    }
+    
+    /* Chat messages */
+    .stChatMessage {
+        background-color: transparent;
+        padding: 1rem 0;
+    }
+    
+    [data-testid="stChatMessage"] {
+        background-color: transparent;
+    }
+    
+    /* User message styling */
+    [data-testid="stChatMessage"][aria-label*="user"] {
+        background-color: #f6f8fa;
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 0.5rem 0;
+    }
+    
+    /* Assistant message styling */
+    [data-testid="stChatMessage"][aria-label*="assistant"] {
+        background-color: transparent;
+    }
+    
+    /* Text areas and markdown */
+    .stMarkdown {
+        color: #24292f;
+    }
+    
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        color: #0969da;
+    }
+    
+    .stMarkdown code {
+        background-color: #f6f8fa;
+        color: #e36209;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    }
+    
+    /* Checkboxes and selectboxes */
+    .stCheckbox label, .stSelectbox label {
+        color: #24292f;
+    }
+    
+    /* Expander styling */
+    .streamlit-expanderHeader {
+        background-color: #f6f8fa;
+        color: #24292f;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+    }
+    
+    /* Divider */
+    hr {
+        border-color: #d0d7de;
+        margin: 1.5rem 0;
+    }
+    
+    /* Titles and headers */
+    h1 {
+        color: #0969da;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+    }
+    
+    h2 {
+        color: #0969da;
+        font-weight: 500;
+    }
+    
+    h3 {
+        color: #24292f;
+        font-weight: 500;
+    }
+    
+    /* Chat input */
+    .stChatInputContainer > div {
+        background-color: #ffffff;
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+    }
+    
+    .stChatInputContainer > div:focus-within {
+        border-color: #0969da;
+        box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
+    }
+    
+    /* Success/Error messages */
+    .stSuccess {
+        background-color: #dafbe1;
+        border: 1px solid #238636;
+        color: #1a7f37;
+    }
+    
+    .stError {
+        background-color: #ffebe9;
+        border: 1px solid #da3633;
+        color: #cf222e;
+    }
+    
+    .stInfo {
+        background-color: #ddf4ff;
+        border: 1px solid #0969da;
+        color: #0969da;
+    }
+    
+    /* Download button */
+    .stDownloadButton > button {
+        background-color: #0969da !important;
+        color: white !important;
+    }
+    
+    .stDownloadButton > button:hover {
+        background-color: #0860ca !important;
+    }
+    
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background-color: #ffffff;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background-color: #f6f8fa;
+        border-radius: 6px 6px 0 0;
+        border: 1px solid #d0d7de;
+        color: #656d76;
+        padding: 0.5rem 1rem;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background-color: #ffffff;
+        color: #0969da;
+        border-bottom-color: #ffffff;
+    }
+    
+    /* Form styling */
+    .stForm {
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        padding: 1.5rem;
+        background-color: #f6f8fa;
+    }
 </style>
 """
 
@@ -269,6 +495,59 @@ if "brief_generated" not in st.session_state:
     st.session_state.brief_generated = False
 if "current_brief" not in st.session_state:
     st.session_state.current_brief = None
+if "dark_mode" not in st.session_state:
+    st.session_state.dark_mode = True  # Default to dark mode
+
+
+def format_persona_title(persona: str) -> str:
+    """Format persona title consistently (Title Case)."""
+    if not persona:
+        return persona
+    
+    # Common titles that should be uppercase
+    title_case_map = {
+        'vp': 'VP',
+        'cto': 'CTO',
+        'cfo': 'CFO',
+        'ceo': 'CEO',
+        'cio': 'CIO'
+    }
+    
+    # Split and format each word
+    words = persona.split()
+    formatted_words = []
+    
+    for i, word in enumerate(words):
+        word_lower = word.lower()
+        
+        # Handle special cases
+        if word_lower in title_case_map:
+            formatted_words.append(title_case_map[word_lower])
+        elif word_lower in ['of', 'the', 'a', 'an', 'and'] and i > 0:
+            # Keep prepositions lowercase (except at start)
+            formatted_words.append(word_lower)
+        else:
+            # Capitalize first letter, rest lowercase
+            formatted_words.append(word.capitalize())
+    
+    return ' '.join(formatted_words)
+
+
+def format_company_name(company: str) -> str:
+    """Format company name consistently (Title Case)."""
+    if not company:
+        return company
+    
+    # Common company suffixes/prefixes that might need special handling
+    # For now, just do proper Title Case
+    words = company.split()
+    formatted_words = []
+    
+    for word in words:
+        # Capitalize first letter, rest lowercase
+        formatted_words.append(word.capitalize())
+    
+    return ' '.join(formatted_words)
 
 
 def parse_user_input(text: str) -> dict:
@@ -349,16 +628,29 @@ def generate_brief_response():
 
 def show_login_page():
     """Show login/register page with modern design."""
-    st.markdown(CURSOR_CSS, unsafe_allow_html=True)
+    # Apply theme CSS
+    css = CURSOR_DARK_CSS if st.session_state.dark_mode else CURSOR_LIGHT_CSS
+    st.markdown(css, unsafe_allow_html=True)
     
     # Centered login form
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
         st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Theme toggle on login page
+        col_theme1, col_theme2 = st.columns([3, 1])
+        with col_theme2:
+            theme_icon = "🌙" if st.session_state.dark_mode else "☀️"
+            theme_label = "Dark" if st.session_state.dark_mode else "Light"
+            if st.button(f"{theme_icon} {theme_label}", use_container_width=True, type="secondary", key="theme_toggle_login"):
+                st.session_state.dark_mode = not st.session_state.dark_mode
+                st.rerun()
+        
         st.markdown("### 🦎 MoZilla GTM Account Brief Generator", unsafe_allow_html=True)
         st.caption("Generate comprehensive account briefs with AI")
-        st.markdown('<p style="font-size: 0.85em; color: #8b949e; margin-top: 1rem;">Made with <a href="https://cursor.sh" style="color: #58a6ff; text-decoration: none;">Cursor</a></p>', unsafe_allow_html=True)
+        cursor_color = "#58a6ff" if st.session_state.dark_mode else "#0969da"
+        st.markdown(f'<p style="font-size: 0.85em; color: #8b949e; margin-top: 1rem;">Made with <a href="https://cursor.sh" style="color: {cursor_color}; text-decoration: none;">Cursor</a></p>', unsafe_allow_html=True)
         st.markdown("<br><br>", unsafe_allow_html=True)
         
         tab1, tab2 = st.tabs(["🔑 Login", "📝 Register"])
@@ -406,7 +698,9 @@ def show_login_page():
 
 def show_saved_briefs_page():
     """Show saved briefs page with modern design."""
-    st.markdown(CURSOR_CSS, unsafe_allow_html=True)
+    # Apply theme CSS
+    css = CURSOR_DARK_CSS if st.session_state.dark_mode else CURSOR_LIGHT_CSS
+    st.markdown(css, unsafe_allow_html=True)
     
     st.markdown("### 📚 My Saved Briefs")
     
@@ -464,11 +758,21 @@ def show_saved_briefs_page():
 
 def show_chat_page():
     """Show main chat interface with modern design."""
-    st.markdown(CURSOR_CSS, unsafe_allow_html=True)
+    # Apply theme CSS
+    css = CURSOR_DARK_CSS if st.session_state.dark_mode else CURSOR_LIGHT_CSS
+    st.markdown(css, unsafe_allow_html=True)
     
     # Sidebar
     with st.sidebar:
         st.markdown(f"### 👤 {st.session_state.username}")
+        
+        # Theme toggle
+        theme_icon = "🌙" if st.session_state.dark_mode else "☀️"
+        theme_label = "Dark Mode" if st.session_state.dark_mode else "Light Mode"
+        if st.button(f"{theme_icon} {theme_label}", use_container_width=True, type="secondary"):
+            st.session_state.dark_mode = not st.session_state.dark_mode
+            st.rerun()
+        
         st.markdown("---")
         
         if st.button("🚪 Logout", use_container_width=True, type="secondary"):
@@ -552,7 +856,8 @@ def show_chat_page():
     # Main content area
     st.markdown("### 🦎 MoZilla GTM Account Brief Generator")
     st.caption("Generate comprehensive account briefs with a conversational interface")
-    st.markdown('<p style="font-size: 0.85em; color: #8b949e;">Made with <a href="https://cursor.sh" style="color: #58a6ff; text-decoration: none;">Cursor</a></p>', unsafe_allow_html=True)
+    cursor_color = "#58a6ff" if st.session_state.dark_mode else "#0969da"
+    st.markdown(f'<p style="font-size: 0.85em; color: #8b949e;">Made with <a href="https://cursor.sh" style="color: {cursor_color}; text-decoration: none;">Cursor</a></p>', unsafe_allow_html=True)
     st.markdown("---")
     
     # Chat messages
@@ -581,15 +886,17 @@ def show_chat_page():
         
         # Update brief data from parsed input (only if we don't already have that field)
         if parsed["company"] and not st.session_state.brief_data["company"]:
-            st.session_state.brief_data["company"] = parsed["company"]
+            st.session_state.brief_data["company"] = format_company_name(parsed["company"])
         if parsed["persona"] and not st.session_state.brief_data["persona"]:
-            st.session_state.brief_data["persona"] = parsed["persona"]
+            st.session_state.brief_data["persona"] = format_persona_title(parsed["persona"])
         if parsed["competitors"] and st.session_state.brief_data["competitors"] == ["Unknown"]:
-            st.session_state.brief_data["competitors"] = parsed["competitors"]
+            # Format competitors consistently
+            formatted_competitors = [format_company_name(c.strip()) for c in parsed["competitors"] if c.strip()]
+            st.session_state.brief_data["competitors"] = formatted_competitors
         
         # Fallback: if we don't have company and prompt looks like a company name
         if not st.session_state.brief_data["company"] and len(prompt.split()) <= 3 and not parsed["persona"]:
-            st.session_state.brief_data["company"] = prompt.strip()
+            st.session_state.brief_data["company"] = format_company_name(prompt.strip())
         
         # Check what we still need
         needs_company = not st.session_state.brief_data["company"]

@@ -1,120 +1,173 @@
-# Account Brief Generator
+# AE Copilot 💼
 
-A Python CLI tool and web app that generates structured account briefs to help Account Executives quickly prepare for outbound outreach and discovery calls.
+A modern Streamlit application for Account Executives at Cursor. Calculate ROI, enrich data from Gong transcripts, integrate with CRM systems, and generate business cases - all in one beautiful, Superhuman-inspired interface.
 
-## What It Does
+## ✨ Features
 
-Generates a comprehensive account brief in markdown format with:
-- **Account Overview** - Company, persona, and competitive landscape
-- **Why Now Triggers** - Timing factors and outreach triggers
-- **Persona Pain Points** - Role-specific challenges and frustrations
-- **5 Discovery Questions** - Structured questions for discovery calls
-- **3-Email Outbound Sequence** - Complete email templates (initial, follow-up, final)
-- **1 LinkedIn Message** - LinkedIn outreach template
-- **Objection Handling** - Common objections with response templates
+### 🧮 ROI Calculator
+- **Deterministic calculations** - No LLM required
+- Calculate developer productivity ROI for Cursor
+- Inputs: Team size, costs, hours saved, adoption rate
+- Outputs: Annual savings, net value, payback period
 
-## Prerequisites
+### 📞 Gong Integration
+- Fetch call transcripts by ID or URL
+- Extract structured signals with evidence:
+  - Team size, current tooling, pain points
+  - Hours saved (only if explicitly stated)
+  - Buying stage, initiatives
+- Apply extracted values to ROI calculator
 
-- Python 3.9 or higher
-- pip (Python package installer)
+### 🏢 CRM Enrichment (HubSpot)
+- Fetch account context by name or domain
+- Pull account information, contacts, opportunities
+- View last activity notes
+- Modular design - easy to add Salesforce
 
-## Installation
+### 📄 Business Case Generator
+- Auto-generates one-pager business cases
+- Includes detailed ROI analysis in appendix
+- Versioned storage grouped by company
+- Ready for stakeholder review
 
-📋 **New to MoZilla?** Check out the [SETUP.md](SETUP.md) guide for detailed setup instructions!
+### 💾 Storage & Versioning
+- Save ROI calculators with versioning
+- Auto-generate business case drafts
+- Group by company name
+- View and manage all versions
 
-1. **Clone the repository:**
+### 📤 Export/Handoff
+- Export "Narrative Pack" as JSON + Markdown
+- Contains all ROI data, Gong signals, CRM context
+- Ready for consumption by narrative generation tools
+
+## 🚀 Quick Start
+
+### Installation
+
 ```bash
-git clone https://github.com/MohamedNSoliman/account-brief-generator.git
-cd account-brief-generator
-```
+# Clone the repository
+git clone https://github.com/MohamedNSoliman/ae-copilot.git
+cd ae-copilot
 
-2. **Create a virtual environment (recommended):**
-```bash
-python3 -m venv venv
-
-# On macOS/Linux:
-source venv/bin/activate
-
-# On Windows:
-venv\Scripts\activate
-```
-
-3. **Install dependencies:**
-```bash
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the app
+streamlit run ae_copilot_app.py
 ```
 
-4. **Optional: Install LLM dependencies** (for enhanced features):
-```bash
-# For OpenAI
-pip install openai>=1.0.0
-
-# For Anthropic
-pip install anthropic>=0.18.0
-```
-
-## Usage
-
-### CLI (Command Line)
+### Environment Variables (Optional)
 
 ```bash
-python main.py --company "Acme Corp" --persona "Head of Engineering" --competitor "VendorX, CompetitorY"
+# Gong API
+export GONG_BASE_URL="https://api.gong.io"
+export GONG_ACCESS_KEY="your-access-key"
+export GONG_ACCESS_SECRET="your-access-secret"
+
+# HubSpot CRM
+export HUBSPOT_PRIVATE_APP_TOKEN="your-private-app-token"
+
+# Mock modes (for testing without API access)
+export GONG_MOCK_MODE="true"
+export CRM_MOCK_MODE="true"
 ```
 
-**Short options:**
+## 🎨 UI Features
+
+- **Superhuman/Grammarly/ChatGPT-inspired design**
+- **Keyboard shortcuts** - Press `Cmd+K` (or `Ctrl+K`) for command palette
+- **Smooth animations** and transitions
+- **Modern, clean interface** with gradient accents
+- **Responsive layout** optimized for productivity
+
+## 📁 Project Structure
+
+```
+ae-copilot/
+├── ae_copilot_app.py          # Main Streamlit app
+├── src/
+│   ├── schemas.py              # Pydantic data models
+│   ├── roi_calculator.py       # ROI calculation logic
+│   ├── gong_client.py          # Gong API client
+│   ├── crm_client.py           # CRM client (HubSpot)
+│   ├── business_case.py        # Business case generator
+│   ├── export.py               # Narrative pack export
+│   └── storage.py              # Versioned storage
+├── data/
+│   ├── sample_transcript.json  # Mock Gong transcript
+│   └── sample_crm.json         # Mock CRM data
+├── outputs/
+│   ├── roi_calculators/        # Saved ROI calculators
+│   └── business_cases/         # Saved business cases
+├── scripts/
+│   ├── setup_github.sh         # GitHub setup automation
+│   └── push_to_github.sh       # Automated push script
+└── static/
+    ├── js/
+    │   └── enhancements.js     # JavaScript enhancements
+    └── css/
+        └── custom.css           # Additional CSS
+```
+
+## 🔄 GitHub Automation
+
+### Initial Setup
 ```bash
-python main.py -c "Ramp" -p "VP Engineering" -co "GitHub Copilot, Windsurf"
+chmod +x scripts/*.sh
+./scripts/setup_github.sh
 ```
 
-**Arguments:**
-- `--company`, `-c`: Company name (required)
-- `--persona`, `-p`: Target persona (required). Recommended: Head of Engineering, VP Engineering, Developer Experience Lead, Platform Lead, Engineering Productivity
-- `--competitor`, `-co`: Competitor name(s), comma-separated (optional, default: "Unknown")
-- `--no-research`: Skip web research and use template placeholders only
-- `--llm`: Use LLM to research persona names and enhance content (choices: `openai` or `anthropic`). Requires API key in environment variable.
-
-**Output:** Saves to `outputs/<company>/<company>-v<N>.md`
-
-### Web App (Streamlit)
-
-Run the web interface:
-
+### Push Changes
 ```bash
-streamlit run app.py
+./scripts/push_to_github.sh "Your commit message"
 ```
 
-Then open your browser to `http://localhost:8501`
+See [GITHUB_SETUP.md](GITHUB_SETUP.md) for detailed instructions.
 
-See [README_WEB_APP.md](README_WEB_APP.md) for deployment options.
+## 🌐 Deploy to Streamlit Cloud
 
-### LLM Integration (Optional)
+1. Push your code to GitHub
+2. Go to https://share.streamlit.io
+3. Connect your repository
+4. Set main file: `ae_copilot_app.py`
+5. Add secrets for API keys (optional)
 
-To get actual persona names and enhanced, personalized content, use the `--llm` flag:
+## 📚 Documentation
 
-```bash
-# With OpenAI (ChatGPT)
-export OPENAI_API_KEY="your-api-key"
-python main.py -c "Ramp" -p "Head of Engineering" --llm openai
+- [README_AE_COPILOT.md](README_AE_COPILOT.md) - Detailed feature documentation
+- [GITHUB_SETUP.md](GITHUB_SETUP.md) - GitHub setup and automation guide
+- [LANGUAGES_GUIDE.md](LANGUAGES_GUIDE.md) - Languages to learn for enhancement
 
-# With Anthropic (Claude)
-export ANTHROPIC_API_KEY="your-api-key"
-python main.py -c "Ramp" -p "VP Engineering" --llm anthropic
-```
+## 🛠️ Tech Stack
 
-**What LLM integration adds:**
-- Real persona names (e.g., "VP Engineering: Jane Smith")
-- Detailed company information (size, funding, revenue, tech stack)
-- Personalized email sequences (no placeholders, company-specific)
-- Enhanced LinkedIn messages
+- **Python 3.9+**
+- **Streamlit** - Web framework
+- **Pydantic** - Data validation
+- **SQLite** - Local storage (via storage module)
+- **JavaScript/CSS** - UI enhancements
 
-## Why It's Useful for AEs
+## 🔐 Security
 
-**Save Time:** Generate a complete account brief in seconds instead of manually researching and drafting outreach materials.
+- API keys stored in environment variables
+- `.gitignore` excludes secrets and sensitive data
+- Sample data files are safe to commit
+- Never commit `.env` files or API keys
 
-**Stay Consistent:** Every brief follows the same structure, ensuring you don't miss critical elements like discovery questions or objection handling.
+## 📝 License
 
-**Scale Outreach:** Quickly prepare personalized outbound sequences for multiple accounts without starting from scratch.
+This project is private and proprietary.
 
-**Be Prepared:** Have objection responses, discovery questions, and email templates ready before your first interaction.
+## 👤 Author
 
-**Focus on Execution:** Spend less time on prep work and more time on selling. Fill in the template placeholders with account-specific research and start outreach immediately.
+Mohamed N. Soliman
+
+## 🙏 Acknowledgments
+
+- Inspired by Superhuman, Grammarly, and ChatGPT UI/UX
+- Built with Streamlit
+- Designed for Account Executives at Cursor
+
+---
+
+**Made with 💜 for AEs who want to move fast and close deals**

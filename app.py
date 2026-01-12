@@ -18,13 +18,16 @@ from src.database import (
 )
 
 
-# Custom CSS for Cursor-like dark appearance
+# Custom CSS for Figma-inspired dark appearance
 CURSOR_DARK_CSS = """
 <style>
-    /* Main theme - Dark, clean, modern */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    /* Main theme - Figma-inspired dark */
     .stApp {
-        background: #0d1117;
-        color: #c9d1d9;
+        background: #1a1a1a;
+        color: #ffffff;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     
     /* Hide default Streamlit branding */
@@ -32,87 +35,117 @@ CURSOR_DARK_CSS = """
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Custom scrollbar */
+    /* Smooth transitions everywhere */
+    * {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Custom scrollbar - Figma style */
     ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
     }
     ::-webkit-scrollbar-track {
-        background: #161b22;
+        background: #1a1a1a;
     }
     ::-webkit-scrollbar-thumb {
-        background: #30363d;
-        border-radius: 4px;
+        background: #2d2d2d;
+        border-radius: 5px;
+        border: 2px solid #1a1a1a;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: #484f58;
+        background: #3d3d3d;
     }
     
-    /* Sidebar styling */
+    /* Sidebar styling - Figma panel style */
     .css-1d391kg {
-        background-color: #161b22;
-        border-right: 1px solid #21262d;
+        background-color: #1f1f1f;
+        border-right: 1px solid #2d2d2d;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     }
     
-    /* Input fields */
+    /* Input fields - Figma input style */
     .stTextInput > div > div > input {
-        background-color: #0d1117;
-        color: #c9d1d9;
-        border: 1px solid #30363d;
-        border-radius: 6px;
+        background-color: #2d2d2d;
+        color: #ffffff;
+        border: 1px solid #3d3d3d;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 14px;
+        font-weight: 400;
+        font-family: 'Inter', sans-serif;
     }
     
     .stTextInput > div > div > input:focus {
-        border-color: #1f6feb;
-        box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
+        border-color: #18a0fb;
+        box-shadow: 0 0 0 2px rgba(24, 160, 251, 0.2);
+        outline: none;
+        background-color: #2d2d2d;
     }
     
-    /* Buttons */
+    .stTextInput > div > div > input::placeholder {
+        color: #6b6b6b;
+    }
+    
+    /* Buttons - Figma primary button style */
     .stButton > button {
-        background-color: #238636;
+        background: linear-gradient(135deg, #18a0fb 0%, #0d8ce8 100%);
         color: white;
         border: none;
-        border-radius: 6px;
-        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        padding: 10px 20px;
         font-weight: 500;
-        transition: all 0.2s;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        box-shadow: 0 2px 4px rgba(24, 160, 251, 0.2);
+        cursor: pointer;
     }
     
     .stButton > button:hover {
-        background-color: #2ea043;
+        background: linear-gradient(135deg, #1ba8ff 0%, #0e95f5 100%);
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+        box-shadow: 0 4px 12px rgba(24, 160, 251, 0.3);
     }
     
-    /* Secondary buttons */
+    .stButton > button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(24, 160, 251, 0.2);
+    }
+    
+    /* Secondary buttons - Figma secondary style */
     button[kind="secondary"] {
-        background-color: #21262d !important;
-        color: #c9d1d9 !important;
-        border: 1px solid #30363d !important;
+        background-color: #2d2d2d !important;
+        color: #ffffff !important;
+        border: 1px solid #3d3d3d !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        font-family: 'Inter', sans-serif !important;
     }
     
     button[kind="secondary"]:hover {
-        background-color: #30363d !important;
-        border-color: #484f58 !important;
+        background-color: #3d3d3d !important;
+        border-color: #4d4d4d !important;
+        transform: translateY(-1px);
     }
     
-    /* Chat messages */
+    /* Chat messages - Figma card style */
     .stChatMessage {
         background-color: transparent;
-        padding: 1rem 0;
+        padding: 12px 0;
     }
     
     [data-testid="stChatMessage"] {
         background-color: transparent;
     }
     
-    /* User message styling */
+    /* User message styling - Elevated card */
     [data-testid="stChatMessage"][aria-label*="user"] {
-        background-color: #161b22;
-        border: 1px solid #21262d;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
+        background-color: #2d2d2d;
+        border: 1px solid #3d3d3d;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 8px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
     
     /* Assistant message styling */
@@ -120,137 +153,248 @@ CURSOR_DARK_CSS = """
         background-color: transparent;
     }
     
-    /* Text areas and markdown */
+    /* Text areas and markdown - Figma typography */
     .stMarkdown {
-        color: #c9d1d9;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
     }
     
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #58a6ff;
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .stMarkdown h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 12px;
+    }
+    
+    .stMarkdown h2 {
+        font-size: 20px;
+        line-height: 1.3;
+        margin-bottom: 10px;
+    }
+    
+    .stMarkdown h3 {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
     }
     
     .stMarkdown code {
-        background-color: #161b22;
-        color: #79c0ff;
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
+        background-color: #2d2d2d;
+        color: #18a0fb;
+        padding: 3px 8px;
+        border-radius: 6px;
         font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        font-size: 13px;
+        border: 1px solid #3d3d3d;
+    }
+    
+    .stMarkdown p {
+        margin-bottom: 12px;
+        color: #e0e0e0;
     }
     
     /* Checkboxes and selectboxes */
     .stCheckbox label, .stSelectbox label {
-        color: #c9d1d9;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
     }
     
-    /* Expander styling */
+    /* Expander styling - Figma accordion */
     .streamlit-expanderHeader {
-        background-color: #161b22;
-        color: #c9d1d9;
-        border: 1px solid #21262d;
-        border-radius: 6px;
+        background-color: #2d2d2d;
+        color: #ffffff;
+        border: 1px solid #3d3d3d;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        transition: all 0.2s;
     }
     
-    /* Divider */
+    .streamlit-expanderHeader:hover {
+        background-color: #3d3d3d;
+        border-color: #4d4d4d;
+    }
+    
+    /* Divider - Figma separator */
     hr {
-        border-color: #21262d;
-        margin: 1.5rem 0;
+        border: none;
+        border-top: 1px solid #2d2d2d;
+        margin: 24px 0;
     }
     
-    /* Titles and headers */
+    /* Titles and headers - Figma typography */
     h1 {
-        color: #58a6ff;
+        color: #ffffff;
         font-weight: 600;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.02em;
+        font-family: 'Inter', sans-serif;
+        font-size: 28px;
+        line-height: 1.2;
     }
     
     h2 {
-        color: #58a6ff;
-        font-weight: 500;
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        font-family: 'Inter', sans-serif;
+        font-size: 20px;
     }
     
     h3 {
-        color: #c9d1d9;
+        color: #ffffff;
         font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
     }
     
-    /* Chat input */
+    /* Chat input - Figma input style */
     .stChatInputContainer > div {
-        background-color: #161b22;
-        border: 1px solid #30363d;
-        border-radius: 8px;
+        background-color: #2d2d2d;
+        border: 1px solid #3d3d3d;
+        border-radius: 12px;
+        padding: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     .stChatInputContainer > div:focus-within {
-        border-color: #1f6feb;
-        box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
+        border-color: #18a0fb;
+        box-shadow: 0 0 0 2px rgba(24, 160, 251, 0.2), 0 2px 8px rgba(0, 0, 0, 0.15);
     }
     
-    /* Success/Error messages */
+    /* Success/Error messages - Figma toast style */
     .stSuccess {
-        background-color: #1a472a;
-        border: 1px solid #238636;
-        color: #3fb950;
+        background-color: #1a3a2a;
+        border: 1px solid #2d5a3d;
+        color: #4ade80;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
     
     .stError {
-        background-color: #3d1f1f;
-        border: 1px solid #da3633;
-        color: #f85149;
+        background-color: #3a1a1a;
+        border: 1px solid #5a2d2d;
+        color: #f87171;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
     
     .stInfo {
-        background-color: #1c2128;
-        border: 1px solid #30363d;
-        color: #79c0ff;
+        background-color: #1a2a3a;
+        border: 1px solid #2d3d5a;
+        color: #60a5fa;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
     
     /* Download button */
     .stDownloadButton > button {
-        background-color: #1f6feb !important;
+        background: linear-gradient(135deg, #18a0fb 0%, #0d8ce8 100%) !important;
         color: white !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        font-family: 'Inter', sans-serif !important;
+        box-shadow: 0 2px 4px rgba(24, 160, 251, 0.2) !important;
     }
     
     .stDownloadButton > button:hover {
-        background-color: #388bfd !important;
+        background: linear-gradient(135deg, #1ba8ff 0%, #0e95f5 100%) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(24, 160, 251, 0.3) !important;
     }
     
-    /* Tabs */
+    /* Tabs - Figma tab style */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background-color: #0d1117;
+        gap: 4px;
+        background-color: #1a1a1a;
+        border-bottom: 1px solid #2d2d2d;
+        padding-bottom: 0;
     }
     
     .stTabs [data-baseweb="tab"] {
-        background-color: #161b22;
-        border-radius: 6px 6px 0 0;
-        border: 1px solid #21262d;
-        color: #8b949e;
-        padding: 0.5rem 1rem;
+        background-color: transparent;
+        border: none;
+        border-radius: 8px 8px 0 0;
+        color: #8b8b8b;
+        padding: 10px 20px;
+        font-weight: 500;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.2s;
+    }
+    
+    .stTabs [data-baseweb="tab"]:hover {
+        background-color: #2d2d2d;
+        color: #ffffff;
     }
     
     .stTabs [aria-selected="true"] {
-        background-color: #0d1117;
-        color: #58a6ff;
-        border-bottom-color: #0d1117;
+        background-color: transparent;
+        color: #18a0fb;
+        border-bottom: 2px solid #18a0fb;
+        font-weight: 600;
     }
     
-    /* Form styling */
+    /* Form styling - Figma card */
     .stForm {
-        border: 1px solid #21262d;
+        border: 1px solid #2d2d2d;
+        border-radius: 12px;
+        padding: 24px;
+        background-color: #1f1f1f;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Selectbox - Figma dropdown */
+    .stSelectbox > div > div {
+        background-color: #2d2d2d;
+        border: 1px solid #3d3d3d;
         border-radius: 8px;
-        padding: 1.5rem;
-        background-color: #161b22;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .stSelectbox > div > div:focus-within {
+        border-color: #18a0fb;
+        box-shadow: 0 0 0 2px rgba(24, 160, 251, 0.2);
+    }
+    
+    /* Main container spacing */
+    .main .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        max-width: 1200px;
+    }
+    
+    /* Caption styling */
+    .stMarkdown p.caption {
+        color: #8b8b8b;
+        font-size: 13px;
+        margin-top: 4px;
     }
     </style>
 """
 
-# Custom CSS for light mode
+# Custom CSS for Figma-inspired light mode
 CURSOR_LIGHT_CSS = """
 <style>
-    /* Main theme - Light, clean, modern */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    /* Main theme - Figma-inspired light */
     .stApp {
         background: #ffffff;
-        color: #24292f;
+        color: #1a1a1a;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     
     /* Hide default Streamlit branding */
@@ -258,87 +402,117 @@ CURSOR_LIGHT_CSS = """
     footer {visibility: hidden;}
     header {visibility: hidden;}
     
-    /* Custom scrollbar */
+    /* Smooth transitions everywhere */
+    * {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Custom scrollbar - Figma style */
     ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
     }
     ::-webkit-scrollbar-track {
-        background: #f6f8fa;
+        background: #f5f5f5;
     }
     ::-webkit-scrollbar-thumb {
-        background: #d0d7de;
-        border-radius: 4px;
+        background: #d0d0d0;
+        border-radius: 5px;
+        border: 2px solid #ffffff;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: #afb8c1;
+        background: #b0b0b0;
     }
     
-    /* Sidebar styling */
+    /* Sidebar styling - Figma panel style */
     .css-1d391kg {
-        background-color: #f6f8fa;
-        border-right: 1px solid #d0d7de;
+        background-color: #fafafa;
+        border-right: 1px solid #e5e5e5;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
     }
     
-    /* Input fields */
+    /* Input fields - Figma input style */
     .stTextInput > div > div > input {
         background-color: #ffffff;
-        color: #24292f;
-        border: 1px solid #d0d7de;
-        border-radius: 6px;
+        color: #1a1a1a;
+        border: 1px solid #d0d0d0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 14px;
+        font-weight: 400;
+        font-family: 'Inter', sans-serif;
     }
     
     .stTextInput > div > div > input:focus {
-        border-color: #0969da;
-        box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
+        border-color: #18a0fb;
+        box-shadow: 0 0 0 2px rgba(24, 160, 251, 0.15);
+        outline: none;
+        background-color: #ffffff;
     }
     
-    /* Buttons */
+    .stTextInput > div > div > input::placeholder {
+        color: #8b8b8b;
+    }
+    
+    /* Buttons - Figma primary button style */
     .stButton > button {
-        background-color: #238636;
+        background: linear-gradient(135deg, #18a0fb 0%, #0d8ce8 100%);
         color: white;
         border: none;
-        border-radius: 6px;
-        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        padding: 10px 20px;
         font-weight: 500;
-        transition: all 0.2s;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        box-shadow: 0 2px 4px rgba(24, 160, 251, 0.2);
+        cursor: pointer;
     }
     
     .stButton > button:hover {
-        background-color: #2ea043;
+        background: linear-gradient(135deg, #1ba8ff 0%, #0e95f5 100%);
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+        box-shadow: 0 4px 12px rgba(24, 160, 251, 0.3);
     }
     
-    /* Secondary buttons */
+    .stButton > button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(24, 160, 251, 0.2);
+    }
+    
+    /* Secondary buttons - Figma secondary style */
     button[kind="secondary"] {
-        background-color: #f6f8fa !important;
-        color: #24292f !important;
-        border: 1px solid #d0d7de !important;
+        background-color: #f5f5f5 !important;
+        color: #1a1a1a !important;
+        border: 1px solid #d0d0d0 !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        font-family: 'Inter', sans-serif !important;
     }
     
     button[kind="secondary"]:hover {
-        background-color: #f3f4f6 !important;
-        border-color: #afb8c1 !important;
+        background-color: #e8e8e8 !important;
+        border-color: #b0b0b0 !important;
+        transform: translateY(-1px);
     }
     
-    /* Chat messages */
+    /* Chat messages - Figma card style */
     .stChatMessage {
         background-color: transparent;
-        padding: 1rem 0;
+        padding: 12px 0;
     }
     
     [data-testid="stChatMessage"] {
         background-color: transparent;
     }
     
-    /* User message styling */
+    /* User message styling - Elevated card */
     [data-testid="stChatMessage"][aria-label*="user"] {
-        background-color: #f6f8fa;
-        border: 1px solid #d0d7de;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
+        background-color: #fafafa;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 8px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
     /* Assistant message styling */
@@ -346,126 +520,234 @@ CURSOR_LIGHT_CSS = """
         background-color: transparent;
     }
     
-    /* Text areas and markdown */
+    /* Text areas and markdown - Figma typography */
     .stMarkdown {
-        color: #24292f;
+        color: #1a1a1a;
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
     }
     
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #0969da;
+        color: #1a1a1a;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .stMarkdown h1 {
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 12px;
+    }
+    
+    .stMarkdown h2 {
+        font-size: 20px;
+        line-height: 1.3;
+        margin-bottom: 10px;
+    }
+    
+    .stMarkdown h3 {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
     }
     
     .stMarkdown code {
-        background-color: #f6f8fa;
-        color: #e36209;
-        padding: 0.2rem 0.4rem;
-        border-radius: 4px;
+        background-color: #f5f5f5;
+        color: #18a0fb;
+        padding: 3px 8px;
+        border-radius: 6px;
         font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        font-size: 13px;
+        border: 1px solid #e5e5e5;
+    }
+    
+    .stMarkdown p {
+        margin-bottom: 12px;
+        color: #4a4a4a;
     }
     
     /* Checkboxes and selectboxes */
     .stCheckbox label, .stSelectbox label {
-        color: #24292f;
+        color: #1a1a1a;
+        font-family: 'Inter', sans-serif;
+        font-weight: 400;
     }
     
-    /* Expander styling */
+    /* Expander styling - Figma accordion */
     .streamlit-expanderHeader {
-        background-color: #f6f8fa;
-        color: #24292f;
-        border: 1px solid #d0d7de;
-        border-radius: 6px;
+        background-color: #fafafa;
+        color: #1a1a1a;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        transition: all 0.2s;
     }
     
-    /* Divider */
+    .streamlit-expanderHeader:hover {
+        background-color: #f5f5f5;
+        border-color: #d0d0d0;
+    }
+    
+    /* Divider - Figma separator */
     hr {
-        border-color: #d0d7de;
-        margin: 1.5rem 0;
+        border: none;
+        border-top: 1px solid #e5e5e5;
+        margin: 24px 0;
     }
     
-    /* Titles and headers */
+    /* Titles and headers - Figma typography */
     h1 {
-        color: #0969da;
+        color: #1a1a1a;
         font-weight: 600;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.02em;
+        font-family: 'Inter', sans-serif;
+        font-size: 28px;
+        line-height: 1.2;
     }
     
     h2 {
-        color: #0969da;
-        font-weight: 500;
+        color: #1a1a1a;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        font-family: 'Inter', sans-serif;
+        font-size: 20px;
     }
     
     h3 {
-        color: #24292f;
+        color: #1a1a1a;
         font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
     }
     
-    /* Chat input */
+    /* Chat input - Figma input style */
     .stChatInputContainer > div {
         background-color: #ffffff;
-        border: 1px solid #d0d7de;
-        border-radius: 8px;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        padding: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
     
     .stChatInputContainer > div:focus-within {
-        border-color: #0969da;
-        box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
+        border-color: #18a0fb;
+        box-shadow: 0 0 0 2px rgba(24, 160, 251, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
-    /* Success/Error messages */
+    /* Success/Error messages - Figma toast style */
     .stSuccess {
-        background-color: #dafbe1;
-        border: 1px solid #238636;
-        color: #1a7f37;
+        background-color: #e8f5e9;
+        border: 1px solid #81c784;
+        color: #2e7d32;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
     .stError {
-        background-color: #ffebe9;
-        border: 1px solid #da3633;
-        color: #cf222e;
+        background-color: #ffebee;
+        border: 1px solid #ef5350;
+        color: #c62828;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
     .stInfo {
-        background-color: #ddf4ff;
-        border: 1px solid #0969da;
-        color: #0969da;
+        background-color: #e3f2fd;
+        border: 1px solid #64b5f6;
+        color: #1565c0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
     /* Download button */
     .stDownloadButton > button {
-        background-color: #0969da !important;
+        background: linear-gradient(135deg, #18a0fb 0%, #0d8ce8 100%) !important;
         color: white !important;
+        border-radius: 8px !important;
+        font-weight: 500 !important;
+        font-family: 'Inter', sans-serif !important;
+        box-shadow: 0 2px 4px rgba(24, 160, 251, 0.2) !important;
     }
     
     .stDownloadButton > button:hover {
-        background-color: #0860ca !important;
+        background: linear-gradient(135deg, #1ba8ff 0%, #0e95f5 100%) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(24, 160, 251, 0.3) !important;
     }
     
-    /* Tabs */
+    /* Tabs - Figma tab style */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 4px;
         background-color: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 0;
     }
     
     .stTabs [data-baseweb="tab"] {
-        background-color: #f6f8fa;
-        border-radius: 6px 6px 0 0;
-        border: 1px solid #d0d7de;
-        color: #656d76;
-        padding: 0.5rem 1rem;
+        background-color: transparent;
+        border: none;
+        border-radius: 8px 8px 0 0;
+        color: #8b8b8b;
+        padding: 10px 20px;
+        font-weight: 500;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.2s;
+    }
+    
+    .stTabs [data-baseweb="tab"]:hover {
+        background-color: #fafafa;
+        color: #1a1a1a;
     }
     
     .stTabs [aria-selected="true"] {
-        background-color: #ffffff;
-        color: #0969da;
-        border-bottom-color: #ffffff;
+        background-color: transparent;
+        color: #18a0fb;
+        border-bottom: 2px solid #18a0fb;
+        font-weight: 600;
     }
     
-    /* Form styling */
+    /* Form styling - Figma card */
     .stForm {
-        border: 1px solid #d0d7de;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        padding: 24px;
+        background-color: #fafafa;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Selectbox - Figma dropdown */
+    .stSelectbox > div > div {
+        background-color: #ffffff;
+        border: 1px solid #d0d0d0;
         border-radius: 8px;
-        padding: 1.5rem;
-        background-color: #f6f8fa;
+        color: #1a1a1a;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .stSelectbox > div > div:focus-within {
+        border-color: #18a0fb;
+        box-shadow: 0 0 0 2px rgba(24, 160, 251, 0.15);
+    }
+    
+    /* Main container spacing */
+    .main .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        max-width: 1200px;
+    }
+    
+    /* Caption styling */
+    .stMarkdown p.caption {
+        color: #8b8b8b;
+        font-size: 13px;
+        margin-top: 4px;
     }
 </style>
 """
